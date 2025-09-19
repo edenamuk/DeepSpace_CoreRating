@@ -1,0 +1,40 @@
+{
+  "攻擊天賦": {
+    "red": [
+      { "character": "黎深", "set": "九黎司命", "talent": "攻擊" }
+    ],
+    "green": [
+      { "character": "沈星回", "set": "逐光騎士", "talent": "攻擊" }
+    ],
+    "pink": [
+      { "character": "秦徹", "set": "無盡掠奪者", "talent": "攻擊" }
+    ],
+    "purple": [
+      { "character": "祁煜", "set": "深海潛行者", "talent": "攻擊" },
+      { "character": "夏以晝", "set": "終極兵器X-02", "talent": "攻擊" }
+    ]  
+  },
+  "防禦天賦": {
+    "red": [
+      { "character": "夏以晝", "set": "遠空職艦官", "talent": "防禦" }
+    ],
+    "blue": [
+      { "character": "黎深", "set": "永恆先知", "talent": "防禦" }
+    ],
+    "yellow": [
+      { "character": "祁煜", "set": "利莫里亞海神", "talent": "防禦" },
+      { "character": "沈星回", "set": "光獵", "talent": "防禦" }
+    ]
+  },
+  "生命天賦": {
+    "red": [
+      { "character": "沈星回", "set": "暗蝕國王", "talent": "生命" }
+    ],
+    "green": [
+      { "character": "秦徹", "set": "深淵主宰", "talent": "生命" }
+    ],
+    "pink": [
+      { "character": "祁煜", "set": "潮汐之神", "talent": "生命" }
+    ]
+  }
+}

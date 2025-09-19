@@ -1,0 +1,138 @@
+{
+  "暴擊流": {
+    "攻擊天賦": {
+      "triangle_mainStat": {
+        "critRate": 100,
+        "critDmg": 100,
+        "weakDmg": 20,
+        "atkBoost": 0,
+        "defBoost": 0,
+        "hpBoost": 0
+      },
+      "subStats": {
+        "atkBoost": 100,
+        "critRate": 100,
+        "critDmg": 100,
+        "atk": 80,
+        "weakDmg": 60,
+        "oathDmg": 40,
+        "def": 0,
+        "defBoost": 0,
+        "hp": 0,
+        "hpBoost": 0
+      }
+    },
+    "防禦天賦": {
+      "triangle_mainStat": {
+        "critRate": 100,
+        "critDmg": 100,
+        "weakDmg": 20,
+        "atkBoost": 0,
+        "defBoost": 0,
+        "hpBoost": 0
+      },
+      "subStats": {
+        "defBoost": 100,
+        "critRate": 100,
+        "critDmg": 100,
+        "def": 80,
+        "weakDmg": 60,
+        "oathDmg": 40,
+        "atk": 20,
+        "atkBoost": 20,
+        "hp": 0,
+        "hpBoost": 0
+      }
+    },
+    "生命天賦": {
+      "triangle_mainStat": {
+        "critRate": 100,
+        "critDmg": 100,
+        "weakDmg": 20,
+        "atkBoost": 0,
+        "defBoost": 0,
+        "hpBoost": 0
+      },
+      "subStats": {
+        "hpBoost": 100,
+        "critRate": 100,
+        "critDmg": 100,
+        "hp": 80,
+        "weakDmg": 60,
+        "oathDmg": 40,
+        "atk": 20,
+        "atkBoost": 20,
+        "def": 0,
+        "defBoost": 0
+      }
+    }
+  },
+  "虛弱流": {
+    "攻擊天賦": {
+      "triangle_mainStat": {
+        "critRate": 40,
+        "critDmg": 20,
+        "weakDmg": 100,
+        "atkBoost": 0,
+        "defBoost": 0,
+        "hpBoost": 0
+      },
+      "subStats": {
+        "atkBoost": 100,
+        "weakDmg": 100,
+        "oathDmg": 80,
+        "atk": 80,
+        "critRate": 60,
+        "critDmg": 40,
+        "def": 0,
+        "defBoost": 0,
+        "hp": 0,
+        "hpBoost": 0
+      }
+    },
+    "防禦天賦": {
+      "triangle_mainStat": {
+        "critRate": 40,
+        "critDmg": 20,
+        "weakDmg": 100,
+        "atkBoost": 0,
+        "defBoost": 0,
+        "hpBoost": 0
+      },
+      "subStats": {
+        "defBoost": 100,
+        "weakDmg": 100,
+        "oathDmg": 80,
+        "def": 80,
+        "critRate": 60,
+        "critDmg": 40,
+        "atk": 20,
+        "atkBoost": 20,
+        "hp": 0,
+        "hpBoost": 0
+      }
+    },
+    "生命天賦": {
+      "triangle_mainStat": {
+        "critRate": 40,
+        "critDmg": 20,
+        "weakDmg": 100,
+        "atkBoost": 0,
+        "defBoost": 0,
+        "hpBoost": 0
+      },
+      "subStats": {
+        "hpBoost": 100,
+        "weakDmg": 100,
+        "oathDmg": 80,
+        "hp": 80,
+        "critRate": 60,
+        "critDmg": 40,
+        "atk": 20,
+        "atkBoost": 20,
+        "def": 0,
+        "defBoost": 0
+      }
+    }
+  }
+}

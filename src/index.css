@@ -1,0 +1,97 @@
+@import url("https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@200..900&family=Noto+Sans+TC:wght@100..900&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Noto Sans TC", ui-sans-serif, system-ui, sans-serif;
+  --font-chiron: "Chiron GoRound TC", "Noto Sans TC", ui-sans-serif, system-ui, sans-serif;
+  --color-mypink: oklch(0.6941 0.1529 352.86);
+  --color-mypink-content: oklch(0.9474 0.02 250.39);
+}
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark;
+}
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  --color-base-100: oklch(0.9474 0.02 250.39);
+  --color-base-200: oklch(0.9018 0.0342 249.58);
+  --color-base-300: oklch(0.7265 0.0718 252.06);
+  --color-base-content: oklch(0.4698 0.0407 248.71);
+  --color-primary: oklch(0.5241 0.1259 252.32);
+  --color-primary-content: oklch(0.9474 0.02 250.39);
+  --color-secondary: oklch(0.5956 0.0381 257.87);
+  --color-secondary-content: oklch(98% 0.003 247.858);
+  --color-accent: oklch(0.5689 0.1812 294.13);
+  --color-accent-content: oklch(0.9474 0.02 250.39);
+  --color-neutral: oklch(0.9474 0.02 250.39);
+  --color-neutral-content: oklch(0.4698 0.0407 248.71);
+  --color-info: oklch(0.5946 0.1398 250.3);
+  --color-info-content: oklch(98% 0.019 200.873);
+  --color-success: oklch(0.6342 0.1283 156.2);
+  --color-success-content: oklch(97% 0.021 166.113);
+  --color-warning: oklch(0.776 0.1428 83.86);
+  --color-warning-content: oklch(98% 0.022 95.277);
+  --color-error: oklch(0.6206 0.1801 25.56);
+  --color-error-content: oklch(97% 0.014 343.198);
+  --radius-selector: 1rem;
+  --radius-field: 0.5rem;
+  --radius-box: 1rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
+
+@plugin "daisyui/theme" {
+  name: "dark";
+  prefersdark: true;
+  --color-base-100: oklch(0.3275 0.0273 261.56);
+  --color-base-200: oklch(0.2919 0.0404 260.36);
+  --color-base-300: oklch(0.414 0.0298 259.76);
+  --color-base-content: oklch(0.8944 0.0363 261.29);
+  --color-primary: oklch(0.7392 0.1154 242.05);
+  --color-primary-content: #oklch(0.9474 0.02 250.39);
+  --color-secondary: oklch(0.7457 0.0304 254.72);
+  --color-secondary-content: oklch(98% 0.003 247.858);
+  --color-accent: oklch(0.6637 0.1634 296.96);
+  --color-accent-content: oklch(0.9474 0.02 250.39);
+  --color-neutral: oklch(0.414 0.0298 259.76);
+  --color-neutral-content: oklch(0.8944 0.0363 261.29);
+  --color-info: oklch(0.6626 0.1358 246.81);
+  --color-info-content: oklch(98% 0.019 200.873);
+  --color-success: oklch(0.7096 0.1434 154.53);
+  --color-success-content: oklch(97% 0.021 166.113);
+  --color-warning: oklch(0.8437 0.1458 93.31);
+  --color-warning-content: oklch(0.414 0.0298 259.76);
+  --color-error: oklch(0.6882 0.1776 22.95);
+  --color-error-content: oklch(97% 0.014 343.198);
+  --radius-selector: 1rem;
+  --radius-field: 0.5rem;
+  --radius-box: 1rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
+
+/* safelist for custom pink color */
+@source inline("bg-mypink text-mypink-content border-mypink bg-mypink/50");
+
+@layer base {
+  body {
+    @apply font-sans;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-chiron;
+  }
+}
+html {
+  overflow-y: scroll; /* 永遠顯示垂直捲軸 */
+}

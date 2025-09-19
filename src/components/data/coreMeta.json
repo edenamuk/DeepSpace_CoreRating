@@ -1,0 +1,47 @@
+{
+  "type": {
+    "diamond": { "diamond_f": "菱形．α", "diamond_s": "α" },
+    "square": { "square_f": "方形．β", "square_s": "β" },
+    "uni": { "uni_f": "海膽．γ", "uni_s": "γ" },
+    "triangle": { "triangle_f": "三角．δ", "triangle_s": "δ" }
+  },
+  "color": {
+    "red": { "red_f": "紅漪", "red_s": "紅" },
+    "blue": { "blue_f": "藍弧", "blue_s": "藍" },
+    "green": { "green_f": "綠珥", "green_s": "綠" },
+    "yellow": { "yellow_f": "黃璃", "yellow_s": "黃" },
+    "pink": { "pink_f": "粉珀", "pink_s": "粉" },
+    "purple": { "purple_f": "紫輝", "purple_s": "紫" }
+  },
+  "mainStat": {
+    "options": {
+      "atk": "攻擊",
+      "hp": "生命",
+      "atkBoost": "攻擊加成",
+      "hpBoost": "生命加成",
+      "defBoost": "防禦加成",
+      "critRate": "暴擊",
+      "critDmg": "暴傷",
+      "weakDmg": "虛弱增傷",
+      "energyBoost": "加速回能",
+      "oathBoost": "誓約回能",
+      "oathDmg": "誓約增傷"
+    },
+    "square": ["energyBoost", "oathBoost", "oathDmg", "atkBoost", "defBoost", "hpBoost"],
+    "diamond": "hp",
+    "uni": "atk",
+    "triangle": ["critRate", "critDmg", "weakDmg", "atkBoost", "defBoost", "hpBoost"]
+  },
+  "subStat": {
+    "atk": "攻擊",
+    "def": "防禦",
+    "hp": "生命",
+    "atkBoost": "攻擊加成",
+    "defBoost": "防禦加成",
+    "hpBoost": "生命加成",
+    "critRate": "暴擊",
+    "critDmg": "暴傷",
+    "oathDmg": "誓約增傷",
+    "weakDmg": "虛弱增傷"
+  }
+}
