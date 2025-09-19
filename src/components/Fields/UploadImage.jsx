@@ -49,6 +49,7 @@ export default function UploadImage({ showToast, apiKey, onRecognitionSuccess })
     event.preventDefault();
     setIsDragging(false);
     if (event.dataTransfer.files && event.dataTransfer.files.length > 0) {
+      setError(null);
       handleFileSelect(event.dataTransfer.files[0]);
       event.dataTransfer.clearData();
     }
@@ -57,6 +58,7 @@ export default function UploadImage({ showToast, apiKey, onRecognitionSuccess })
   // 🔹 選擇檔案後的處理
   const handleFileChange = (event) => {
     if (event.target.files && event.target.files.length > 0) {
+      setError(null);
       handleFileSelect(event.target.files[0]);
     }
   };
@@ -65,10 +67,19 @@ export default function UploadImage({ showToast, apiKey, onRecognitionSuccess })
   const handleFileSelect = async (file) => {
     // 檢查 API Key 是否存在
     if (!apiKey) {
-      showToast?.("error", "請先在設定中輸入您的 Gemini API Key。",2000, <FontAwesomeIcon icon={faTriangleExclamation} />);
+      showToast?.(
+        "error",
+        "請先在設定中輸入您的 Gemini API Key。",
+        2000,
+        <FontAwesomeIcon icon={faTriangleExclamation} />
+      );
       return;
     }
 
+    if (!file.type.startsWith("image/")) {
+      setError("檔案格式錯誤，請上傳圖片檔案 ( jpg / png / webp... )");
+      return;
+    }
     // 建立圖片預覽
     const previewUrl = URL.createObjectURL(file);
     setPreview(previewUrl);
@@ -195,7 +206,7 @@ Now, analyze the image provided by the user and generate the final JSON output.`
       </div>
 
       {/* 🔹 下方狀態顯示區 */}
-      <div className="mt-2 h-4">
+      <div className="mt-2">
         {/* AI 分析提示訊息 */}
         {error && (
           <div className="alert alert-error alert-soft rounded-field p-2 sm:px-4">

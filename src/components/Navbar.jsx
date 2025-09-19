@@ -261,12 +261,13 @@ export default function Navbar({ apiKey, onApiKeyChange }) {
 
             <input type="radio" name="info" className="tab mb-4" aria-label="更新日誌" />
             <div className="tab-content h-full overflow-y-auto text-sm">
-              <ol className="list-disc list-inside space-y-6 mt-4">
-                <li>v1.1.1 版本發布。</li>
+              <ol className="list-disc list-inside space-y-2 mt-4">
+                <li>v1.1.2 - 新增 API Key 說明、修正推薦搭檔文字、修正評分條。</li>
+                <li>v1.1.1 - 版本發布。</li>
               </ol>
               <div className="divider h-0"></div>
               <p className="text-sm font-bold">目前已知問題</p>
-              <ul className="list-disc list-inside pt-2">
+              <ul className="list-disc list-inside pt-2 space-y-2">
                 <li>Result評分條位置錯誤。</li>
                 <li>圖片辨識無法識別非圖片檔案。</li>
               </ul>

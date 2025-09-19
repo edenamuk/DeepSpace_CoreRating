@@ -45,7 +45,7 @@ export default function ResultCard({ data, onReset, targetRef }) {
       badge: "badge-mypink",
     },
     purple: {
-      bg: "bg-accent text-neutral-accent-content",
+      bg: "bg-accent text-accent-content",
       border: "border-accent",
       combo: "border-accent bg-accent/50",
       badge: "badge-accent",
@@ -56,16 +56,13 @@ export default function ResultCard({ data, onReset, targetRef }) {
 
   // === Part 1: 資質進度條設定 ===
   const maxScore = data.overall.score;
-  let progressColor = "bg-secondary";
-  if (maxScore >= 95) {
-    progressColor = "bg-warning"; // 完美
-  } else if (maxScore >= 85) {
-    progressColor = "bg-accent"; // 極品
-  } else if (maxScore >= 75) {
-    progressColor = "bg-info"; // 優秀
-  } else if (maxScore >= 60) {
-    progressColor = "bg-success"; // 良好
-  }
+  const progressColor = () => {
+    if (maxScore >= 95) return { bar: "bg-warning", bg: "bg-warning/30" };
+    if (maxScore >= 85) return { bar: "bg-accent", bg: "bg-accent/30" };
+    if (maxScore >= 75) return { bar: "bg-info", bg: "bg-info/30" };
+    if (maxScore >= 60) return { bar: "bg-success", bg: "bg-success/30" };
+    return { bar: "bg-secondary", bg: "bg-secondary/30" };
+  };
 
   // === Part 2: 評分結果 ===
   const { crit, weak } = data;
@@ -120,18 +117,27 @@ export default function ResultCard({ data, onReset, targetRef }) {
       {/* === PART 1 : 資質評級進度條 === */}
       <div className="w-full px-4 sm:px-12">
         {/* 標籤區 */}
-        <div className="flex justify-between gap-2 sm:gap-8 text-xs font-bold">
-          <span className={maxScore < 40 ? "text-secondary" : "text-base-content/30"}>肥料</span>
-          <span className="invisible">普通</span>
-          <span className={maxScore >= 40 && maxScore < 60 ? "text-secondary" : "text-base-content/30"}>普通</span>
-          <span className={maxScore >= 60 && maxScore < 75 ? "text-success" : "text-base-content/30"}>良好</span>
-          <span className={maxScore >= 75 && maxScore < 85 ? "text-info" : "text-base-content/30"}>優秀</span>
-          <span className={maxScore >= 85 && maxScore < 95 ? "text-accent" : "text-base-content/30"}>極品</span>
-          <span className={maxScore >= 95 ? "text-warning" : "text-base-content/30"}>完美</span>
+        <div className="flex justify-between gap-2 sm:gap-8 text-xs font-bold text-center">
+          <span className={`w-1/8 text-start ${maxScore < 40 ? "text-secondary" : "text-base-content/30"}`}>肥料</span>
+          <span className="w-1/8 invisible">普通</span>
+          <span className="w-1/8 invisible">普通</span>
+          <span className={`w-1/8 ${maxScore >= 40 && maxScore < 60 ? "text-secondary" : "text-base-content/30"}`}>
+            普通
+          </span>
+          <span className={`w-1/8 ${maxScore >= 60 && maxScore < 75 ? "text-success" : "text-base-content/30"}`}>
+            良好
+          </span>
+          <span className={`w-1/8 ${maxScore >= 75 && maxScore < 85 ? "text-info" : "text-base-content/30"}`}>
+            優秀
+          </span>
+          <span className={`w-1/8 ${maxScore >= 85 && maxScore < 95 ? "text-accent" : "text-base-content/30"}`}>
+            極品
+          </span>
+          <span className={`w-1/8 text-end ${maxScore >= 95 ? "text-warning" : "text-base-content/30"}`}>完美</span>
         </div>
         {/* 進度條 */}
-        <div className={`w-full h-2 mt-2 rounded-lg ${progressColor}/20`}>
-          <div className={`h-2 rounded-lg ${progressColor}`} style={{ width: `${maxScore}%` }}></div>
+        <div className={`w-full h-2 my-2 rounded-lg ${progressColor().bg} `}>
+          <div className={`h-2 rounded-lg ${progressColor().bar}`} style={{ width: `${maxScore}%` }}></div>
         </div>
       </div>
 
