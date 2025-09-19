@@ -49,7 +49,7 @@ export default function App() {
 
   return (
     // 外層容器：垂直水平置中、最小高度填滿螢幕、響應式左右內距
-    <div className="flex flex-col items-center justify-center px-2 sm:px-4 md:px-6 min-h-screen bg-base-200 transition-colors">
+    <div className="flex flex-col items-center justify-center px-2 sm:px-4 md:px-6 min-h-screen bg-base-200 transition-colors cursor-default">
       {/* 上方導覽列 (左上切換 / 右上齒輪&問號) */}
       <Navbar apiKey={apiKey} onApiKeyChange={handleApiKeyChange} />
 

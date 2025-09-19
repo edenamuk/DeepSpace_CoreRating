@@ -215,12 +215,12 @@ export default function Navbar({ apiKey, onApiKeyChange }) {
             <input type="radio" name="info" className="tab mb-4" aria-label="更新日誌" />
             <div className="tab-content h-full overflow-y-auto">
               <ol className="list-disc list-inside space-y-6 mt-4 text-sm">
-                <li>v1.4 版本發布。</li>
+                <li>v1.1.1 版本發布。</li>
               </ol>
               <div className="divider h-0"></div>
               <strong className="text-sm">目前已知問題</strong>
               <ul className="list-disc list-inside text-sm mt-2">
-                <li>Result評分條德不配位。</li>
+                <li>Result評分條位置錯誤。</li>
                 <li>圖片辨識無法識別非圖片檔案。</li>
               </ul>
             </div>

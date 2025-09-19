@@ -65,7 +65,7 @@ export default function UploadImage({ showToast, apiKey, onRecognitionSuccess })
   const handleFileSelect = async (file) => {
     // 檢查 API Key 是否存在
     if (!apiKey) {
-      showToast?.("error", "請先在設定中輸入您的 Gemini API Key。");
+      showToast?.("error", "請先在設定中輸入您的 Gemini API Key。",2000, <FontAwesomeIcon icon={faTriangleExclamation} />);
       return;
     }
 
