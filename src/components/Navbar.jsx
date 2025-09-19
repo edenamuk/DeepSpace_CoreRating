@@ -115,16 +115,15 @@ export default function Navbar({ apiKey, onApiKeyChange }) {
               儲存設定
             </button>
           </div>
-          <div className="divider"></div>
         </Modal>
       )}
 
       {/* 使用說明彈窗 */}
       {showHelp && (
         <Modal title="使用說明" onClose={() => setShowHelp(false)} closeOnEsc={true}>
-          <div className="tabs tabs-border max-h-[40vh]">
+          <div className="tabs tabs-border max-h-[46vh]">
             <input type="radio" name="info" className="tab mb-4" aria-label="關於" defaultChecked />
-            <div className="tab-content h-full">
+            <div className="tab-content h-full text-sm">
               <p className="text-lg font-bold">歡迎使用深空芯核評分系統！</p>
               <ul className="list-none list-inside space-y-2 mt-2 text-sm">
                 <li>本工具旨在協助玩家快速、直觀地評估《戀與深空》芯核的品質與投資價值。</li>
@@ -136,10 +135,11 @@ export default function Navbar({ apiKey, onApiKeyChange }) {
                 </li>
               </ul>
             </div>
+
             <input type="radio" name="info" className="tab mb-4" aria-label="說明" />
-            <div className="tab-content h-full overflow-y-auto">
+            <div className="tab-content h-full overflow-y-auto text-sm">
               <p className="text-lg font-bold text-primary/80">三步驟，快速評估您的芯核品質！</p>
-              <ol className="list-decimal list-inside space-y-6 mt-4 text-sm">
+              <ol className="list-decimal list-inside space-y-6 mt-4">
                 <li className="list-decimal">
                   <strong>設定</strong>
                   <br />
@@ -156,8 +156,9 @@ export default function Navbar({ apiKey, onApiKeyChange }) {
                     <li>
                       <strong>為什麼需要它？</strong>
                       <br />
-                      因為圖片辨識需要 AI 協助，本工具會透過 Gemini API
-                      來自動讀取圖片中的文字。若沒有金鑰，將無法使用圖片辨識功能，但您仍可選擇手動輸入芯核數值。
+                      因為圖片辨識需要 AI 協助，本工具會透過 Gemini API 來自動讀取圖片中的文字。若沒有金鑰，將
+                      <span className="underline decoration-4 decoration-error">無法</span>
+                      使用圖片辨識功能，但您仍可選擇手動輸入芯核數值。
                     </li>
                     <li>
                       <strong>在哪裡取得？</strong>
@@ -196,7 +197,11 @@ export default function Navbar({ apiKey, onApiKeyChange }) {
                   每個流派將顯示：
                   <ul className="list-disc list-inside">
                     <li>流派分數：顯示該流派下的最終評分。</li>
-                    <li>精簡專家評語：點出亮點、缺陷與潛力預測。</li>
+                    <li>
+                      精簡專家評語：點出<span className="underline decoration-4 decoration-warning">亮點</span>、
+                      <span className="underline decoration-4 decoration-primary">缺陷</span>與
+                      <span className="underline decoration-4 decoration-success">潛力預測</span>。
+                    </li>
                   </ul>
                   其他功能：
                   <ul className="list-disc list-inside">
@@ -206,20 +211,62 @@ export default function Navbar({ apiKey, onApiKeyChange }) {
                 </li>
               </ol>
               <div className="divider h-0"></div>
-              <strong className="text-sm">使用提醒</strong>
-              <ul className="list-disc list-inside text-sm font-bold mt-2">
+              <strong className="">使用提醒</strong>
+              <ul className="list-disc list-inside font-bold py-2 pb-8">
                 <li>評分結果基於統計與預估模型，僅供參考。</li>
                 <li>所有生成內容僅供個人使用，非商業用途。</li>
               </ul>
             </div>
+
+            <input type="radio" name="info" className="tab mb-4" aria-label="API Key 申請" />
+            <div className="tab-content h-full overflow-y-auto text-sm">
+              <ul className="list-none list-inside space-y-4 ">
+                <li>
+                  <strong>Step 1：登入 Google 帳號</strong>
+                  <br />
+                  前往{" "}
+                  <a
+                    className="link link-secondary underline-offset-2 decoration-dashed"
+                    href="https://aistudio.google.com/"
+                    target="_blank"
+                  >
+                    Google AI Studio
+                    <FontAwesomeIcon icon={faUpRightFromSquare} className="scale-80" />
+                  </a>
+                  ，使用你平常的 Google 帳號登入。
+                </li>
+                <li>
+                  <strong>Step 2：建立 API Key</strong>
+                  <br />
+                  登入後點選左側選單的 Get API key，選擇建立在 Google Cloud Project 或新專案中，系統會自動產生一組 API
+                  Key。
+                  <br />
+                  （格式通常像這樣：AIzaSy*********）
+                </li>
+                <li>
+                  <strong>Step 3：複製 API Key 並在本工具中使用</strong>
+                  <br />
+                  複製金鑰，回到本工具貼上剛剛複製的 API Key，點擊儲存並關閉彈窗完成設定。
+                </li>
+              </ul>
+              <div className="divider"></div>
+              <p className="font-bold">注意事項</p>
+              <ol className="list-disc list-inside font-bold pt-2">
+                <li>請妥善保存，這是你專屬的金鑰，不要公開分享。</li>
+                <li>
+                  API Key 是免費的，但有使用次數限制，若顯示錯誤或額度不足，可以重新到 Google AI Studio 查看使用情況。
+                </li>
+              </ol>
+            </div>
+
             <input type="radio" name="info" className="tab mb-4" aria-label="更新日誌" />
-            <div className="tab-content h-full overflow-y-auto">
-              <ol className="list-disc list-inside space-y-6 mt-4 text-sm">
+            <div className="tab-content h-full overflow-y-auto text-sm">
+              <ol className="list-disc list-inside space-y-6 mt-4">
                 <li>v1.1.1 版本發布。</li>
               </ol>
               <div className="divider h-0"></div>
-              <strong className="text-sm">目前已知問題</strong>
-              <ul className="list-disc list-inside text-sm mt-2">
+              <p className="text-sm font-bold">目前已知問題</p>
+              <ul className="list-disc list-inside pt-2">
                 <li>Result評分條位置錯誤。</li>
                 <li>圖片辨識無法識別非圖片檔案。</li>
               </ul>
