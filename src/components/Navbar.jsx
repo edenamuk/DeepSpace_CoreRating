@@ -8,13 +8,19 @@
 
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faQuestion, faGear, faUpRightFromSquare, faKey, faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
-import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
+import {
+  faQuestion,
+  faGear,
+  faUpRightFromSquare,
+  faKey,
+  faFloppyDisk,
+  faFileLines,
+} from "@fortawesome/free-solid-svg-icons";
 import Modal from "./Modal";
 
 export default function Navbar({ apiKey, onApiKeyChange }) {
   const [showSettings, setShowSettings] = useState(false);
-  const [showKeySuccess, setShowKeySuccess] = useState(false);
+  const [showChangelog, setShowChangelog] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
   const [theme, setTheme] = useState("light");
   const [localApiKey, setLocalApiKey] = useState(apiKey || "");
@@ -29,7 +35,7 @@ export default function Navbar({ apiKey, onApiKeyChange }) {
   // API Key 設定
   const handleSaveSettings = () => {
     onApiKeyChange?.(localApiKey); // 呼叫從 App.jsx 傳來的函式，更新金鑰
-    setShowKeySuccess(true);
+    setTimeout(() => setShowSettings(false), 1000);
   };
 
   const handleInputChange = (e) => {
@@ -46,31 +52,37 @@ export default function Navbar({ apiKey, onApiKeyChange }) {
   useEffect(() => {
     if (showSettings) {
       setLocalApiKey(apiKey || "");
-      setShowKeySuccess(false);
     }
   }, [showSettings, apiKey]);
 
   return (
     <nav className="flex justify-between items-center w-full sm:max-w-md md:max-w-lg lg:max-w-xl px-2">
-      {/* 左上：明暗切換 */}
-      <label className="swap swap-rotate scale-50">
-        {/* this hidden checkbox controls the state */}
-        <input onClick={toggleTheme} type="checkbox" className="theme-controller" value="synthwave" />
+      {/* 左上：主題切換 & Changelog */}
+      <div className="flex gap-1 items-center">
+        <button className="btn btn-xs btn-circle btn-outline btn-secondary" onClick={() => setShowChangelog(true)}>
+          <FontAwesomeIcon icon={faFileLines} />
+        </button>
+        <label className="swap swap-rotate scale-50">
+          {/* this hidden checkbox controls the state */}
+          <input onClick={toggleTheme} type="checkbox" className="theme-controller" value="synthwave" />
 
-        {/* sun icon */}
-        <svg className="swap-off h-10 w-10 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z" />
-        </svg>
+          {/* sun icon */}
+          <svg className="swap-off h-10 w-10 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z" />
+          </svg>
 
-        {/* moon icon */}
-        <svg className="swap-on h-10 w-10 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
-        </svg>
-      </label>
+          {/* moon icon */}
+          <svg className="swap-on h-10 w-10 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
+          </svg>
+        </label>
+      </div>
+
       {/* 標題 */}
       <div className="text-center font-bold text-sm sm:text-base">深空芯核評分系統</div>
+
       {/* 右上：齒輪 & 問號 */}
-      <div className="flex gap-2">
+      <div className="flex gap-2 items-center">
         <button className="btn btn-xs btn-circle btn-outline btn-secondary" onClick={() => setShowHelp(true)}>
           <FontAwesomeIcon icon={faQuestion} />
         </button>
@@ -101,14 +113,15 @@ export default function Navbar({ apiKey, onApiKeyChange }) {
                   onChange={handleInputChange}
                 />
               </label>
-              {showKeySuccess && (
-                <div className="label text-xs text-success pt-1">
-                  <span className="label-text-alt flex items-center gap-1">
-                    <FontAwesomeIcon icon={faCircleCheck} />
-                    API 金鑰已成功儲存
-                  </span>
-                </div>
-              )}
+
+              <a
+                className="label link link-secondary underline-offset-2 decoration-dashed font-normal text-xs "
+                href="https://aistudio.google.com/"
+                target="_blank"
+              >
+                點此前往 Google AI Studio 獲取
+                <FontAwesomeIcon icon={faUpRightFromSquare} className="scale-80" />
+              </a>
             </fieldset>
             <button className="btn btn-primary w-full mt-2" onClick={handleSaveSettings}>
               <FontAwesomeIcon icon={faFloppyDisk} />
@@ -251,27 +264,29 @@ export default function Navbar({ apiKey, onApiKeyChange }) {
               </ul>
               <div className="divider"></div>
               <p className="font-bold">注意事項</p>
-              <ol className="list-disc list-inside font-bold pt-2">
+              <ol className="list-disc list-inside font-bold py-2 pb-6">
                 <li>請妥善保存，這是你專屬的金鑰，不要公開分享。</li>
                 <li>
                   API Key 是免費的，但有使用次數限制，若顯示錯誤或額度不足，可以重新到 Google AI Studio 查看使用情況。
                 </li>
               </ol>
             </div>
+          </div>
+        </Modal>
+      )}
 
-            <input type="radio" name="info" className="tab mb-4" aria-label="更新日誌" />
-            <div className="tab-content h-full overflow-y-auto text-sm">
-              <ol className="list-disc list-inside space-y-2 mt-4">
-                <li>v1.1.2 - 新增 API Key 說明、修正推薦搭檔文字、修正評分條。</li>
-                <li>v1.1.1 - 版本發布。</li>
-              </ol>
-              <div className="divider h-0"></div>
-              <p className="text-sm font-bold">目前已知問題</p>
-              <ul className="list-disc list-inside pt-2 space-y-2">
-                <li>Result評分條位置錯誤。</li>
-                <li>圖片辨識無法識別非圖片檔案。</li>
-              </ul>
-            </div>
+      {/* 更新日誌彈窗 */}
+      {showChangelog && (
+        <Modal title="更新日誌" onClose={() => setShowChangelog(false)} closeOnEsc={true}>
+          <div className="w-full max-h-[46vh] space-y-2 overflow-y-auto text-sm ">
+            <ol className="list-disc list-inside space-y-2">
+              <li>v1.1.3 - 調整更新日誌位置。</li>
+              <li>v1.1.2 - 新增 API Key 說明、修正推薦搭檔文字、修正評分條。</li>
+              <li>v1.1.1 - 版本發布。</li>
+            </ol>
+            <div className="divider h-0"></div>
+            <p className="text-sm font-bold">目前已知問題</p>
+            <ul className="list-disc list-inside pt-2 space-y-2"></ul>
           </div>
         </Modal>
       )}

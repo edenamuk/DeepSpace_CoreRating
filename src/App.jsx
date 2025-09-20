@@ -4,6 +4,8 @@ import ResultCard from "./components/ResultCard";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { calculateSQS } from "./components/utils/calculateSQS";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
 
 export default function App() {
   const [showResult, setShowResult] = useState(false); // 狀態：是顯示輸入畫面還是結果畫面
@@ -25,6 +27,7 @@ export default function App() {
     const trimmedKey = key.trim(); // 去除前後空白
     setApiKey(trimmedKey);
     localStorage.setItem("gemini_api_key", trimmedKey);
+    showToast("success", "API Key 已儲存！", 2000, <FontAwesomeIcon icon={faCircleCheck} />);
   };
 
 
@@ -51,7 +54,7 @@ export default function App() {
     // 外層容器：垂直水平置中、最小高度填滿螢幕、響應式左右內距
     <div className="flex flex-col items-center justify-center px-2 sm:px-4 md:px-6 min-h-screen bg-base-200 transition-colors cursor-default">
       {/* 上方導覽列 (左上切換 / 右上齒輪&問號) */}
-      <Navbar apiKey={apiKey} onApiKeyChange={handleApiKeyChange} />
+      <Navbar apiKey={apiKey} onApiKeyChange={handleApiKeyChange}/>
 
       {/* 卡片容器：最大寬度隨螢幕變化、內距、陰影、圓角 */}
       <main ref={mainRef} className="card w-full sm:max-w-md md:max-w-lg lg:max-w-xl bg-base-100 transition-colors">
