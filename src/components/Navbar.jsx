@@ -134,7 +134,7 @@ export default function Navbar({ apiKey, onApiKeyChange }) {
       {/* 使用說明彈窗 */}
       {showHelp && (
         <Modal title="使用說明" onClose={() => setShowHelp(false)} closeOnEsc={true}>
-          <div className="tabs tabs-border max-h-[46vh]">
+          <div className="tabs tabs-border max-h-[48vh]">
             <input type="radio" name="info" className="tab mb-4" aria-label="關於" defaultChecked />
             <div className="tab-content h-full text-sm">
               <p className="text-lg font-bold">歡迎使用深空芯核評分系統！</p>
@@ -278,15 +278,34 @@ export default function Navbar({ apiKey, onApiKeyChange }) {
       {/* 更新日誌彈窗 */}
       {showChangelog && (
         <Modal title="更新日誌" onClose={() => setShowChangelog(false)} closeOnEsc={true}>
-          <div className="w-full max-h-[46vh] space-y-2 overflow-y-auto text-sm ">
-            <ol className="list-disc list-inside space-y-2">
-              <li>v1.1.3 - 調整更新日誌位置。</li>
-              <li>v1.1.2 - 新增 API Key 說明、修正推薦搭檔文字、修正評分條。</li>
+          <div className="w-full max-h-[48vh] space-y-2 overflow-y-auto text-sm">
+            <ol className="list-disc list-inside space-y-4">
+              <li>
+                v1.1.3 - [2025-09-20]
+                <br />
+                <p className="pl-4">
+                  - 細化圖片辨識錯誤處理
+                  <br /> - 調整更新日誌、版權聲明位置
+                  <br /> - 修正三角芯核邏輯問題
+                  <br /> - 修正 AI prompt
+                </p>
+              </li>
+              <li>
+                v1.1.2 - [2025-09-19]
+                <br />
+                <p className="pl-4">
+                  - 新增 API Key 說明
+                  <br /> - 修正推薦搭檔文字、評分條
+                </p>
+              </li>
               <li>v1.1.1 - 版本發布。</li>
             </ol>
             <div className="divider h-0"></div>
             <p className="text-sm font-bold">目前已知問題</p>
-            <ul className="list-disc list-inside pt-2 space-y-2"></ul>
+            <ul className="list-disc list-inside  space-y-1">
+              <li>評分條位置可能需要調整。</li>
+              <li>評分細節可能需要微調。</li>
+            </ul>
           </div>
         </Modal>
       )}

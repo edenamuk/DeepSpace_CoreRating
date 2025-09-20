@@ -106,8 +106,9 @@ function calculateSubStatsDetails(flow, talent, coreData) {
 
 /**
  * [核心計算引擎 - v4]
- * 1. 感知芯核類型並採用不同評分策略。
- * 2. 將主詞條融入評分計算。
+ * 1. 感知芯核類型並採用不同評分策略，將主詞條融入評分計算。
+ * 修正了三角芯核的計分邏輯，採用「基礎分 + 附加分」模型，
+ * 避免主詞條權重為100時，分數被強制鎖定為100的問題。
  * @param {"暴擊流"|"虛弱流"} flow - 流派。
  * @param {"攻擊天賦"|"防禦天賦"|"生命天賦"} talent - 天賦。
  * @param {Object} coreData - 芯核數據。mainStat: { key, value }
@@ -127,19 +128,14 @@ function getBuildDetails(flow, talent, coreData) {
     const mainStatWeights = WEIGHTS[flow]?.[talent]?.triangle_mainStat || {};
     const mainStatWeight = mainStatWeights[mainStat] || 0;
 
-    if (mainStatWeight === 0) {
-      // 如果主詞條完全無用，給予巨大懲罰
-      finalScore = Math.round(subStatsScore * 0.1);
-    } else {
-      // 採用混合算法，將主詞條價值融入總分
-      const mainStatContribution = mainStatWeight / 100;
-      finalScore = Math.round(subStatsScore * (1 - mainStatContribution) + 100 * mainStatContribution);
-    }
+    // 主詞條貢獻的基礎分 (滿分70)
+    const mainStatBaseScore = (mainStatWeight / 100) * 70;
+    // 副詞條貢獻的附加分 (滿分30)
+    const subStatsBonusScore = (subStatsScore / 100) * 30;
+
+    finalScore = Math.round(mainStatBaseScore + subStatsBonusScore);
   }
   // 策略B & C: 對於菱形、海膽、方形芯核，分數完全由副詞條決定。
-  // 所以我們什麼都不做，finalScore 就等於 subStatsScore。
-  // 這兩種情況的差異將在評語中體現。
-
   return { score: finalScore, details };
 }
 
@@ -234,7 +230,7 @@ export function calculateSQS(coreData) {
   // === Step 1: 計算所有6個組合的詳細數據 ===
   flows.forEach((flow) => {
     talents.forEach((talent) => {
-      console.log(flow, talent);
+      // console.log(flow, talent);
       const key = `${flow}_${talent}`;
       allResults[key] = getBuildDetails(flow, talent, coreData);
       allScores.push(allResults[key].score);

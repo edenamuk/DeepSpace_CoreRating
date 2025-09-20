@@ -96,7 +96,7 @@ export default function UploadImage({ showToast, apiKey, onRecognitionSuccess })
 
 Follow these rules STRICTLY:
 1.  **Output Format**: Your response MUST be a single, minified JSON object. Do not include json markdown, explanations, or any other text.
-2.  **Level**: Extract the enhancement level, which is the number after the '+' sign (e.g., "+0", "+15"). The JSON value should be a string.
+2.  **Level**: Extract the enhancement level, which is prefixed by a '+' sign. Return only the numeric digits that follow. For example, if the image shows "+15", the value should be the string "15".
 3.  **Color**: Determine the color from the first two characters of the Core's name (e.g., "綠琪" -> "green").
 4.  **Type**: Determine the type from the suffix in the Core's name (e.g., "β" -> "beta") or its visual shape ("方形" -> "square").
 5.  **Stats Identification**:
@@ -133,35 +133,67 @@ Analyze the image and produce a JSON object exactly like this example structure,
 
 **Example of how to process the user's image:**
 - Name: "綠琪芯核．β" -> color is "green", type is "square".
-- Level: "+0" -> level is 0.
+- Level: "+0" -> level is "0".
 - Main Stat: "加速回能 +6.0%" -> mainStat is "energyBoost".
 - Sub Stat 1: "防禦 +41" -> {"key": "def", "value": 41, "upgradeCount": 0}.
 - Sub Stat 2: "攻擊加成 +11.3% ①" -> {"key": "atk_pct", "value": 11.3, "upgradeCount": 1}.
 
-Now, analyze the image provided by the user and generate the final JSON output.`; // 你的 Prompt 指令，與後端版本相同
+Now, analyze the image provided by the user and generate the final JSON output.`;
       const imagePart = await fileToGenerativePart(file);
 
       // 3. 發送請求
       const result = await model.generateContent([prompt, imagePart]);
       const response = await result.response;
-      const text = response.text();
 
-      const cleanedText = text
-        .replace(/```json/g, "")
-        .replace(/```/g, "")
-        .trim();
-      const analysisResult = JSON.parse(cleanedText);
+      // --- 新增：檢查 Gemini 的安全過濾回饋 ---
+      if (response.promptFeedback?.blockReason) {
+        // 如果請求因為安全因素被阻擋，拋出一個自訂錯誤
+        throw new Error(`請求被 Gemini 安全機制阻擋，原因：${response.promptFeedback.blockReason}`);
+      }
+      const text = response.text();
+      let analysisResult;
+      
+      // --- 新增：對 JSON 解析進行獨立的錯誤捕捉 ---
+      try {
+        const cleanedText = text
+          .replace(/```json/g, "")
+          .replace(/```/g, "")
+          .trim();
+        analysisResult = JSON.parse(cleanedText);
+      } catch (parseError) {
+        console.error("JSON Parsing Error:", parseError, "Raw text:", text);
+        // 如果 AI 回傳的不是有效的 JSON，拋出一個更具體的錯誤
+        throw new Error("AI 回應格式錯誤，無法解析資料。");
+      }
 
       // 4. 成功後回傳結果
       setIsAnalyzing(false);
       onRecognitionSuccess?.(analysisResult);
       showToast?.("success", "圖片辨識成功！", 2500, <FontAwesomeIcon icon={faCircleCheck} />);
+      console.log("Analysis Result:", analysisResult);
     } catch (err) {
+      // --- 優化：細緻化的錯誤處理 ---
       console.error("Gemini API Error:", err);
       setIsAnalyzing(false);
       setPreview(null);
-      // 錯誤處理可以更細緻，例如判斷是否為金鑰錯誤
-      setError(`辨識失敗：${err.message}`);
+
+      let userErrorMessage = `辨識失敗：${err.message}`; // 預設錯誤訊息
+
+      const errorMessage = err.message || "";
+
+      if (errorMessage.includes("API key not valid")) {
+        userErrorMessage = "API 金鑰無效，請在設定中檢查您的金鑰。";
+      } else if (errorMessage.includes("quota")) {
+        userErrorMessage = "API 金鑰額度已用盡，請檢查您的 Google AI Studio 帳戶。";
+      } else if (errorMessage.includes("請求被 Gemini 安全機制阻擋")) {
+        userErrorMessage = "圖片或請求內容疑似違反政策，已被阻擋。";
+      } else if (errorMessage.includes("AI 回應格式錯誤")) {
+        userErrorMessage = "AI 回應格式錯誤，請稍後再試或更換圖片。";
+      } else if (err instanceof TypeError && errorMessage.includes("fetch")) {
+        userErrorMessage = "網路連線失敗，請檢查您的網路並再試一次。";
+      }
+
+      setError(userErrorMessage); // 顯示對使用者更友善的錯誤訊息
     }
   };
 
